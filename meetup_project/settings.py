@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # apps
     'users',
+    'homepage',
     # plugins
     'debug_toolbar',
 ]
