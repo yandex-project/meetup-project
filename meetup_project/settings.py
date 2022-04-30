@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     # apps
     'users',
     'homepage',
+    'meetups',
     # plugins
     'debug_toolbar',
 ]
