@@ -19,14 +19,24 @@
                     <div class="mb-3">
                         {{ field.errors }}
                         <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                        {{ field }}
+                        <input
+                                {% if field.widget_type == 'clearablefile' %}
+                                    type="file"
+                                {% else %}
+                                    type="{{ field.widget_type }}"
+                                {% endif %}
+                                    class="form-control"
+                                    name="{{ field.name }}"
+                                    autocomplete="{{ field.subwidgets.0.data.attrs.autocomplete }}"
+                                {% if field.subwidgets.0.data.value %}
+                                    value="{{ field.subwidgets.0.data.value }}"
+                                {% endif %}
+                        >
                     </div>
                 {% endfor %}
-                {% block buttons %}
-                    <button type="submit" class="btn btn-primary">Изменить</button>
-                {% endblock %}
+                <button type="submit" class="btn btn-primary">Изменить</button>
             </form>
-            <a class="btn btn-danger mt-3" href="{% url 'logout' %}">Выйти из профиля</a>
+            <a class="btn btn-danger mt-3" href="{% url 'logout' %}">Выйти</a>
         </div>
     </section>
 {% endblock %}

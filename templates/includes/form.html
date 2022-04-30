@@ -13,7 +13,12 @@
                     <div class="mb-3">
                         {{ field.errors }}
                         <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                        {{ field }}
+                        <input
+                                type="{{ field.widget_type }}"
+                                class="form-control"
+                                name="{{ field.name }}"
+                                autocomplete="{{ field.subwidgets.0.data.attrs.autocomplete }}"
+                        >
                     </div>
                 {% endfor %}
                 {% block buttons %}

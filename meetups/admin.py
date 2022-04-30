@@ -12,6 +12,5 @@ class MeetupAdmin(admin.ModelAdmin):
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
-    list_display = ('name', )
-    list_display_links = ('name', )
-
+    list_display = ('name',)
+    list_display_links = ('name',)

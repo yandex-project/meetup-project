@@ -12,9 +12,9 @@
                 {% endif %}
                 <li><a class="nav-link" href="{% url 'homepage' %}">Домой</a></li>
                 {% if request.user.is_authenticated %}
-{#                    <li><a class="getstarted" href='{% url 'profile' %}'>Профиль</a></li>#}
+                    <li><a class="getstarted" href='{% url 'profile' %}'>Профиль</a></li>
                 {% else %}
-{#                    <li><a class="getstarted" href='{% url 'login_page' %}'>Войти</a></li>#}
+                    <li><a class="getstarted" href='{% url 'login' %}'>Войти</a></li>
                 {% endif %}
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
