@@ -63,3 +63,27 @@ class Meetup(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Tag(models.Model):
+
+    name = models.CharField(
+        verbose_name='Имя',
+        max_length=50,
+        help_text='Максимальная длина 50'
+    )
+
+    parent = models.ForeignKey(
+        verbose_name='Родитель',
+        to='self',
+        related_name='children',
+        null=True,
+        on_delete=models.SET_NULL,
+    )
+
+    class Meta():
+        verbose_name = 'Тег'
+        verbose_name_plural = 'Теги'
+
+    def __str__(self):
+        return self.name
