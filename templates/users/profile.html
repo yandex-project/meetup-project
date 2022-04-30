@@ -1,0 +1,32 @@
+{% extends 'includes/index.html' %}
+
+{% block title %}
+    Profile
+{% endblock %}
+
+{% block main %}
+    <section class="container">
+        <h1>Профиль</h1>
+        <div>
+            <p><strong>Я</strong> очень крут</p>
+        </div>
+
+        <h3>Изменить данные</h3>
+        <div class="container">
+            <form action="" method="post">
+                {% csrf_token %}
+                {% for field in user_form %}
+                    <div class="mb-3">
+                        {{ field.errors }}
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                    </div>
+                {% endfor %}
+                {% block buttons %}
+                    <button type="submit" class="btn btn-primary">Изменить</button>
+                {% endblock %}
+            </form>
+            <a class="btn btn-danger mt-3" href="{% url 'logout' %}">Выйти из профиля</a>
+        </div>
+    </section>
+{% endblock %}

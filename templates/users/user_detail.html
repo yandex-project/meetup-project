@@ -1,0 +1,25 @@
+{% extends 'includes/index.html' %}
+
+{% block title %}
+    Информация о пользователе
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <h1>Информация о пользователе</h1>
+        {% if user.first_name %}
+            <p>Имя: {{ user.first_name }}</p>
+        {% endif %}
+        {% if user.last_name %}
+            <p>Фамилия: {{ user.last_name }}</p>
+        {% endif %}
+        {% if user.email %}
+            <p>Почта: {{ user.email }}</p>
+        {% endif %}
+        {% if user.description %}
+            <p>Описание профиля: {{ user.description }}</p>
+        {% endif %}
+
+    </div>
+
+{% endblock %}

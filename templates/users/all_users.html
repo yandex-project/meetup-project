@@ -1,0 +1,38 @@
+{% extends 'includes/index.html' %}
+
+{% block title %}
+    Список пользователей
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <h1>Список пользователей</h1>
+        <div class="row-cols-2">
+            {% for user in users %}
+                <div class="col-sm-4">
+                    <div class="card m-2" style="width: 35rem;">
+                        <div class="card-body">
+                            <div class="card-title">
+                                <h5>
+                                    {{ user }}
+                                </h5>
+                            </div>
+                            {% if user.email or user.first_name or user.last_name %}
+                                <p class="card-text">
+                                    {{ user.email }}
+                                </p>
+                            {% endif %}
+                        </div>
+                        <div class="card-body">
+                            <a href="{% url 'detail_users' user.pk %}" class="btn btn-primary">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <h3>Пользователей нет</h3>
+            {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock %}
