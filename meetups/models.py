@@ -78,6 +78,7 @@ class Tag(models.Model):
         to='self',
         related_name='children',
         null=True,
+        blank=True,
         on_delete=models.SET_NULL,
     )
 
