@@ -14,6 +14,12 @@ class UserAdmin(DjUserAdmin):
         }),
         ('Важные даты', {'fields': ('last_login', 'date_joined')}),
     )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'password1', 'password2'),
+        }),
+    )
     ordering = ('email',)
     list_display = ['first_name', 'last_name', 'email']
     list_display_links = ('first_name', 'last_name', 'email')
