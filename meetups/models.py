@@ -51,11 +51,11 @@ class Meetup(models.Model):
         verbose_name='Сайт'
     )
 
-    # tags = models.ManyToManyField(
-    #     verbose_name='Теги',
-    #     to='Tag',
-    #     related_name='meetups'
-    # )
+    tags = models.ManyToManyField(
+        verbose_name='Теги',
+        to='Tag',
+        related_name='meetups'
+    )
 
     class Meta():
         verbose_name = 'Встерча'
