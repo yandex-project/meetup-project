@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import User
+
 
 class Meetup(models.Model):
 
@@ -13,7 +15,7 @@ class Meetup(models.Model):
         verbose_name='Дата'
     )
 
-    description = models.CharField(
+    description = models.TextField(
         verbose_name='Описание',
         max_length=500,
         help_text='Максимальная длинна 500'
@@ -27,35 +29,33 @@ class Meetup(models.Model):
 
     owner = models.ForeignKey(
         verbose_name='Создатель',
-        to='User',
-        related_name='meetups',
+        to=User,
+        related_name='my_meetups',
         null=True,
         on_delete=models.SET_NULL
     )
 
     lecturers = models.ManyToManyField(
         verbose_name='Лекторы',
-        to='User',
-        related_name='meetups'
+        to=User,
+        related_name='lectures'
     )
 
     users = models.ManyToManyField(
         verbose_name='Участники',
-        to='User',
+        to=User,
         related_name='meetups'
     )
 
-    website = models.CharField(
-        verbose_name='Сайт',
-        max_length=250,
-        help_text='Максимальная длинна 250'
+    website = models.URLField(
+        verbose_name='Сайт'
     )
 
-    tags = models.ManyToManyField(
-        verbose_name='Теги',
-        to='Tag',
-        related_name='meetups'
-    )
+    # tags = models.ManyToManyField(
+    #     verbose_name='Теги',
+    #     to='Tag',
+    #     related_name='meetups'
+    # )
 
     class Meta():
         verbose_name = 'Встерча'
