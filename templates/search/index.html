@@ -1,0 +1,13 @@
+{% extends 'includes/index.html' %}
+
+{% block title %}
+    Поиск
+{% endblock %}
+
+{% block main %}
+    <section class="container">
+        {% include 'search/search_bar.html' %}
+
+        {% include 'search/results.html' %}
+    </section>
+{% endblock %}

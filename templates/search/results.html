@@ -1,0 +1,11 @@
+{% if items %}
+    <div class="row" style="padding: 10px">
+        {% for item in items %}
+            {% include 'search/meetup_card.html' with meetup=item %}
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="d-flex justify-content-center mt-4">
+        <h3 class="text mt-4" >Ничего не найдено</h3>
+    </div>
+{% endif %}
