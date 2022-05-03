@@ -1,10 +1,18 @@
+import random
+import string
+
 from django.db import models
 
 from users.models import User
+from django.utils.text import slugify
+from unidecode import unidecode
+
+
+def rand_slug():
+    return ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(6))
 
 
 class Meetup(models.Model):
-
     name = models.CharField(
         verbose_name='Имя',
         max_length=150,
@@ -48,25 +56,39 @@ class Meetup(models.Model):
     )
 
     website = models.URLField(
-        verbose_name='Сайт'
+        verbose_name='Сайт',
+        blank=True
     )
 
     tags = models.ManyToManyField(
         verbose_name='Теги',
         to='Tag',
-        related_name='meetups'
+        related_name='meetups',
+        blank=True
     )
 
-    class Meta():
+    slug = models.SlugField(
+        verbose_name='Slug',
+        unique=True,
+    )
+    is_visible = models.BooleanField(
+        verbose_name='Показывать?'
+    )
+
+    class Meta:
         verbose_name = 'Встерча'
         verbose_name_plural = 'Встречи'
 
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(unidecode(self.name)) + '-' + rand_slug()
+        super(Meetup, self).save(*args, **kwargs)
+
 
 class Tag(models.Model):
-
     name = models.CharField(
         verbose_name='Имя',
         max_length=50,
@@ -82,7 +104,7 @@ class Tag(models.Model):
         on_delete=models.SET_NULL,
     )
 
-    class Meta():
+    class Meta:
         verbose_name = 'Тег'
         verbose_name_plural = 'Теги'
 
