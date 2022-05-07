@@ -3,5 +3,6 @@
     <div id="djeym-app" class="djeym"></div>
     <script type="text/javascript" src="{% static "djeym/js/jquery.min.js" %}"></script>
     <script src="{% static "djeym/js/jquery-regex.min.js" %}"></script>
+    <!-- в 'map_slug' в контексте должно быть записано значение поля slug нужной карты -->
     {% djeym_yandex_map slug=map_slug lang=request.LANGUAGE_CODE %}
 </div>
