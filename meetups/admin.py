@@ -1,10 +1,12 @@
 from django.contrib import admin
 
 from meetups.models import Tag, Meetup
+from maps.admin import MeetupMarkerInline
 
 
 @admin.register(Meetup)
 class MeetupAdmin(admin.ModelAdmin):
+    inlines = (MeetupMarkerInline,)
     fieldsets = (
         ('Важная информация', {'fields': ('name', 'description', 'date', 'place')}),
 
