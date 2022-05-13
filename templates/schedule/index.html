@@ -6,10 +6,14 @@
 
 {% block main %}
     <section class="container">
-        <div class="clearfix">
-            <a class="btn btn-info left" href="{% url 'schedule:schedule' %}?{{ prev_month }}"> Previous Month </a>
-            <a class="btn btn-info right" href="{% url 'schedule:schedule' %}?{{ next_month }}"> Next Month </a>
-        </div>
-        {{ calendar|safe }}
+        {% if date_error %}
+            <h1>Такай даты не существует 🥶</h1>
+        {% else %}
+            <div class="clearfix">
+                <a class="btn btn-info left" href="{% url 'schedule:schedule' %}?{{ prev_month }}"> Предыдущий месяц </a>
+                <a class="btn btn-info right" href="{% url 'schedule:schedule' %}?{{ next_month }}"> Следующий месяц </a>
+            </div>
+            {{ calendar|safe }}
+        {% endif %}
     </section>
 {% endblock %}
