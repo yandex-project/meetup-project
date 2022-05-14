@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.views.generic import TemplateView, View
 from maps.utils import get_global_map
 from django.http import HttpResponse, HttpResponseForbidden

@@ -6,6 +6,7 @@ from django.db import models
 from users.models import User
 from django.utils.text import slugify
 from unidecode import unidecode
+from django.urls import reverse
 
 
 def rand_slug():
@@ -86,6 +87,12 @@ class Meetup(models.Model):
         if not self.slug:
             self.slug = slugify(unidecode(self.name)) + '-' + rand_slug()
         super(Meetup, self).save(*args, **kwargs)
+
+    # get meetup href in HTML format
+    @property
+    def get_html_url(self):
+        url = reverse("schedule:meetup-detail", args=(self.id,))
+        return f'<a href="{url}"> {self.name} </a>'
 
 
 class Tag(models.Model):
