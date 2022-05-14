@@ -6,14 +6,18 @@ from djeym.models import Placemark
 
 
 class Marker(models.Model):
-    meetup = models.OneToOneField(Meetup,
-                                  on_delete=models.CASCADE,
-                                  related_name='marker')
-    placemark = models.OneToOneField(Placemark,
-                                     on_delete=models.CASCADE,
-                                     blank=True,
-                                     null=True,
-                                     related_name='marker')
+    meetup = models.OneToOneField(
+        Meetup,
+        on_delete=models.CASCADE,
+        related_name='marker'
+    )
+    placemark = models.OneToOneField(
+        Placemark,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='marker'
+    )
 
 
 @receiver(post_save, sender=Meetup)

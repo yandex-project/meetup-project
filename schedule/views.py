@@ -1,12 +1,12 @@
 import datetime
 import calendar
-from django.views import generic
+from django.views.generic import ListView
 from meetups.models import Meetup
 
 from schedule.utils import Calendar
 
 
-class ScheduleView(generic.ListView):
+class ScheduleView(ListView):
     model = Meetup
     template_name = 'schedule/index.html'
 

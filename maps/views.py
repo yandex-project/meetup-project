@@ -19,7 +19,7 @@ class GlobalMapView(TemplateView):
         return context
 
 
-#redefined class from djeym.views
+# redefined class from djeym.views
 class AjaxUploadPlacemarks(View):
     """Ajax - Upload placemarks to map."""
 
