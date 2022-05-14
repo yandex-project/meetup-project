@@ -1,8 +1,11 @@
-{% load i18n static djeymtags %}
+{% load i18n static djeymtags maptags %}
 <div id="map" class="map">
     <div id="djeym-app" class="djeym"></div>
     <script type="text/javascript" src="{% static "djeym/js/jquery.min.js" %}"></script>
     <script src="{% static "djeym/js/jquery-regex.min.js" %}"></script>
-    <!-- в 'map_slug' в контексте должно быть записано значение поля slug нужной карты -->
-    {% djeym_yandex_map slug=map_slug lang=request.LANGUAGE_CODE %}
+    {% comment %}
+         в 'map_slug' в контексте должно быть записано значение поля slug нужной карты
+         в 'markers' в контексте должен быть список id нужных Marker объектов
+    {% endcomment %}
+    {% djeym_yandex_map_filter slug=map_slug markers=markers lang=request.LANGUAGE_CODE %}
 </div>
