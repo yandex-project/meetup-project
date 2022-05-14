@@ -1,0 +1,19 @@
+{% extends 'includes/index.html' %}
+
+{% block title %}
+    Митап: {{ meetup.name }}
+{% endblock %}
+
+{% block main %}
+    <section class="container">
+        <h1>
+            {{ meetup.name }}
+        </h1>
+        <h4>
+            {{ meetup.description }}
+        </h4>
+        {% if meetup.website %}
+            <a href="{{ meetup.website }}" class="link-primary">Сайт Митапа</a>
+        {% endif %}
+    </section>
+{% endblock %}
