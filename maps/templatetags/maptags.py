@@ -27,4 +27,3 @@ def djeym_yandex_map_filter(slug, markers, lang='en'):
         vue_vendors = vue_vendors_css_js('front')
         ctx.update(vue_vendors)
     return ctx
-
