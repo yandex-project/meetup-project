@@ -14,7 +14,12 @@ class ScheduleView(generic.ListView):
         context = super().get_context_data(**kwargs)
 
         # use today's date for the calendar or get it from the url
-        date = get_date(self.request.GET.get('month', None))
+        # returns error message if date does not exist
+        try:
+            date = get_date(self.request.GET.get('month', None))
+        except Exception as e:
+            context["date_error"] = "<h1>Такай даты не существует 🥶</h1>"
+            return context
 
         # Instantiate our calendar class with today's year and date
         cal = Calendar(date.year, date.month)
@@ -31,21 +36,23 @@ class ScheduleView(generic.ListView):
 
 def get_date(cur_month):
     if cur_month:
-        year, month = (int(x) for x in cur_month.split('-'))
-        return datetime.date(year, month, day=1)
+        if cur_month.count('-') == 2:
+            return datetime.datetime.strptime(cur_month, "%Y-%m-%d")
+        else:
+            return datetime.datetime.strptime(cur_month, "%Y-%m")
     return datetime.datetime.today()
 
 
 def prev_month(date):
     first = date.replace(day=1)
-    prev_month = first - datetime.timedelta(days=1)
-    month = 'month=' + str(prev_month.year) + '-' + str(prev_month.month)
-    return month
+    month = first - datetime.timedelta(days=1)
+    data = 'month=' + str(month.year) + '-' + str(month.month)
+    return data
 
 
 def next_month(date):
     days_in_month = calendar.monthrange(date.year, date.month)[1]
     last = date.replace(day=days_in_month)
-    next_month = last + datetime.timedelta(days=1)
-    month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
-    return month
+    month = last + datetime.timedelta(days=1)
+    data = 'month=' + str(month.year) + '-' + str(month.month)
+    return data
