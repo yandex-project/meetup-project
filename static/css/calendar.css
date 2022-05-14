@@ -30,12 +30,12 @@
     font-size: 16px;
 }
 
-ul {
+.calendar ul {
     height: 100%;
     padding: 0px 5px 0px 20px;
 }
 
-a {
+.calendar a {
     color: #2487ce;
 }
 
