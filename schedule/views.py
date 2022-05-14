@@ -1,7 +1,6 @@
 import datetime
 import calendar
 from django.views import generic
-from django.utils.safestring import mark_safe
 from meetups.models import Meetup
 
 from schedule.utils import Calendar
@@ -28,7 +27,7 @@ class ScheduleView(generic.ListView):
         context['next_month'] = next_month(date)
 
         return context
-    
+
 
 def get_date(cur_month):
     if cur_month:

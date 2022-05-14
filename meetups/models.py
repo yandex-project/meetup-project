@@ -87,11 +87,11 @@ class Meetup(models.Model):
         if not self.slug:
             self.slug = slugify(unidecode(self.name)) + '-' + rand_slug()
         super(Meetup, self).save(*args, **kwargs)
-    
+
     # get meetup href in HTML format
     @property
     def get_html_url(self):
-        url = reverse("schedule:meetup-detail", args=(self.id, ))
+        url = reverse("schedule:meetup-detail", args=(self.id,))
         return f'<a href="{url}"> {self.name} </a>'
 
 

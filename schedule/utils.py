@@ -19,20 +19,20 @@ class Calendar(HTMLCalendar):
         return "<td></td>"
 
     # formats a week as a tr
-    def formatweek(self, theweek, meetup):
+    def formatweek(self, theweek, meetup=None):
         week = ""
         for data, weekday in theweek:
             week += self.formatday(data, meetup)
         return f"<tr> {week} </tr>"
 
     # formats a month as a table
-    def formatmonth(self, withyear=True):
+    def formatmonth(self, withyear=True, **kwargs):
         meetups = Meetup.objects.filter(
             date__year=self.year, date__month=self.month
         )
         calendar = (
             '<table border="0" cellpadding="0" cellspacing="0" class="calendar">\n'
-        ) 
+        )
         calendar += (
             f"{self.formatmonthname(self.year, self.month, withyear=withyear)}\n"
         )
