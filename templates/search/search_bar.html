@@ -7,13 +7,17 @@
                         Поиск
                     </h3>
                 </div>
-                <form method="post">
-                    {% csrf_token %}
+                <form method="get">
+                    <input type="hidden" name="type" value="search">
                     <div class="d-flex align-items-center">
-                        <input type="hidden" name="type" value="search">
 
-                        <input class="form-control flex-shrink-1 form-control-borderless"
-                               type="search" placeholder="Найди по названию" name="search"/>
+                        <input
+                                name="name"
+                                type="search"
+                                class="form-control flex-shrink-1 form-control-borderless"
+                                placeholder="Найди по названию"
+                                value="{{ request.GET.name }}"
+                        />
 
                         <button class="btn btn-primary  m-2" type="submit">Найти</button>
                     </div>
@@ -24,11 +28,18 @@
                             Расширенный поиск
                         </a>
                     </p>
+
                     <div class="collapse" id="collapseExample">
 
                         <label for="category" class="form-label">Категория</label>
-                        <input class="form-control" list="categoryOptions" id="category"
-                               placeholder="Напишите чтобы найти">
+                        <input
+                                name="category"
+                                id="category"
+                                class="form-control"
+                                list="categoryOptions"
+                                placeholder="Напишите чтобы найти"
+                                value="{{ request.GET.category }}"
+                        >
                         <datalist id="categoryOptions">
                             {% for tag in tags %}
                                 <option value="{{ tag.name }}">
@@ -40,19 +51,30 @@
                                 <label for="from-date" class="form-label">
                                     От какой даты
                                 </label>
-                                <input type="date" id="from-date" class="form-control">
+                                <input
+                                        name="from_date"
+                                        type="date"
+                                        id="from-date"
+                                        class="form-control"
+                                        value="{{ request.GET.from_date }}"
+                                >
                             </div>
 
                             <div class="col">
                                 <label for="to-date" class="form-label">
                                     До какой даты
                                 </label>
-                                <input type="date" id="to-date" class="form-control">
+                                <input
+                                        name="to_date"
+                                        id="to-date"
+                                        type="date"
+                                        class="form-control"
+                                        value="{{ request.GET.to_date }}"
+                                >
                             </div>
                         </div>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>

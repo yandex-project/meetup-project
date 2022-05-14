@@ -1,12 +1,14 @@
 import random
 import string
 
+from unidecode import unidecode
+
 from django.db import models
+from django.urls import reverse
+from django.utils.text import slugify
 
 from users.models import User
-from django.utils.text import slugify
-from unidecode import unidecode
-from django.urls import reverse
+from meetups.managers import MeetupManager
 
 
 def rand_slug():
@@ -72,9 +74,12 @@ class Meetup(models.Model):
         verbose_name='Slug',
         unique=True,
     )
+
     is_visible = models.BooleanField(
         verbose_name='Показывать?'
     )
+
+    objects = MeetupManager()
 
     class Meta:
         verbose_name = 'Встерча'

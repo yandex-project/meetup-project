@@ -17,7 +17,7 @@ class ScheduleView(ListView):
         # returns error message if date does not exist
         try:
             date = get_date(self.request.GET.get('month', None))
-        except Exception as e:
+        except Exception:
             context["date_error"] = "<h1>Такай даты не существует 🥶</h1>"
             return context
 

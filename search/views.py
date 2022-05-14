@@ -9,7 +9,7 @@ class SearchView(View):
 
     def get(self, request):
         context = {
-            'items': Meetup.objects.filter(is_visible=True),
+            'items': Meetup.objects.get_meetups_from_context(request.GET),
             'tags': Tag.objects.all().order_by('name')
         }
 
