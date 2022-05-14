@@ -3,10 +3,32 @@ from meetups.models import Meetup
 
 
 class Calendar(HTMLCalendar):
+
+    DAYS = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
+    MONTHS = ["NONE", "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"]
+
     def __init__(self, year=None, month=None):
         self.year = year
         self.month = month
         super(Calendar, self).__init__()
+
+    def formatweekday(self, day):
+        """
+        Return a weekday name as a table header.
+        """
+        return '<th class="%s">%s</th>' % (
+            self.cssclasses_weekday_head[day], self.DAYS[day])
+    
+    def formatmonthname(self, theyear, themonth, withyear=True):
+        """
+        Return a month name as a table row.
+        """
+        if withyear:
+            s = '%s %s' % (self.MONTHS[themonth], theyear)
+        else:
+            s = '%s' % self.MONTHS[themonth]
+        return '<tr><th colspan="7" class="%s">%s</th></tr>' % (
+            self.cssclass_month_head, s)
 
     # formats a day as a td
     def formatday(self, day, meetups):
