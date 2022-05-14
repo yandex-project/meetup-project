@@ -1,4 +1,7 @@
+
 {% extends 'includes/index.html' %}
+
+{% load static %}
 
 {% block title %}
     Календарь
@@ -16,4 +19,8 @@
             {{ calendar|safe }}
         {% endif %}
     </section>
+{% endblock %}
+
+{% block css %}
+    <link href="{% static 'css/calendar.css' %}" rel="stylesheet">
 {% endblock %}
