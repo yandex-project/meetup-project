@@ -46,12 +46,6 @@ class Meetup(models.Model):
         on_delete=models.SET_NULL
     )
 
-    lecturers = models.ManyToManyField(
-        verbose_name='Лекторы',
-        to=User,
-        related_name='lectures'
-    )
-
     users = models.ManyToManyField(
         verbose_name='Участники',
         to=User,
@@ -122,3 +116,38 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Lecture(models.Model):
+    name = models.CharField(
+        verbose_name='Название',
+        max_length=150,
+    )
+
+    description = models.TextField(
+        verbose_name='Описание',
+    )
+
+    lectors = models.ManyToManyField(
+        verbose_name='Лекторы/Лектор',
+        to=User,
+        related_name='lectures'
+    )
+
+    meetup = models.ForeignKey(
+        verbose_name='Митап',
+        to=Meetup,
+        related_name='lectures',
+        on_delete=models.CASCADE
+    )
+
+    time = models.TimeField(
+        verbose_name='Время',
+    )
+
+    class Meta:
+        verbose_name = 'Лекция'
+        verbose_name_plural = 'Лекции'
+
+    def __str__(self):
+        return f'{self.meetup} {self.name}'

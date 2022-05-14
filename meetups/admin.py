@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from meetups.models import Tag, Meetup
+from meetups.models import Tag, Meetup, Lecture
 from maps.admin import MeetupMarkerInline
 
 
@@ -12,11 +12,18 @@ class MeetupAdmin(admin.ModelAdmin):
 
         ('Дополнительная информация', {'fields': ('website', 'tags', 'is_visible'), }),
 
-        ('Люди', {'fields': ('owner', 'lecturers', 'users')}),
+        ('Люди', {'fields': ('owner', 'users')}),
     )
     list_display = ('name', 'description', 'date', 'place')
     list_display_links = ('name', 'description')
-    filter_horizontal = ('tags', 'lecturers', 'users')
+    filter_horizontal = ('tags', 'users',)
+
+
+@admin.register(Lecture)
+class LectureAdmin(admin.ModelAdmin):
+    list_display = ('name', 'meetup')
+    list_display_links = ('name',)
+    filter_horizontal = ('lectors',)
 
 
 @admin.register(Tag)

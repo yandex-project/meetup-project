@@ -6,14 +6,23 @@
 
 {% block main %}
     <section class="container">
-        <h1>
-            {{ meetup.name }}
-        </h1>
-        <h4>
-            {{ meetup.description }}
-        </h4>
-        {% if meetup.website %}
-            <a href="{{ meetup.website }}" class="link-primary">Сайт Митапа</a>
-        {% endif %}
+        <div class="row">
+            <h1>
+                {{ meetup.name }}
+            </h1>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col">
+                {% include 'meetup/left-side.html' %}
+            </div>
+            <div class="col">
+                {% include 'meetup/right-side.html' %}
+            </div>
+        </div>
+
+
     </section>
 {% endblock %}
