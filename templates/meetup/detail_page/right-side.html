@@ -1,0 +1,23 @@
+<h4>Лекции:</h4>
+<div class="row">
+    {% for lecture in meetup.lectures.all %}
+        <div class="card m-2" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title"><strong>{{ lecture.name }}</strong></h5>
+                <h6 class="card-subtitle mb-2 text-muted">Начало в {{ lecture.time|time:'H:i' }}</h6>
+                <p class="card-text">{{ lecture.description }}</p>
+                <p class="card-text">Лекторы:
+                    {% for lector in lecture.lectors.all %}
+                        <br>
+                        {{ forloop.counter }}) <a
+                            href="{% url 'detail_users' lector.pk %}"
+                            class="link-primary">{{ lector }}</a>
+                    {% endfor %}
+                </p>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% if request.user == meetup.owner %}
+    <a href="{% url 'create_lecture' meetup.slug %}" class="btn btn-success">Добавить лекцию</a>
+{% endif %}

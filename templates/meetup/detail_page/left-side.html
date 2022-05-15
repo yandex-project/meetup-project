@@ -1,0 +1,18 @@
+<h4>
+    {{ meetup.description }}
+</h4>
+<p>
+    Организатор: <a href="{% url 'detail_users' meetup.owner.pk %}"
+                    class="link-primary">{{ meetup.owner }}</a>
+</p>
+<p>
+    Дата проведения: {{ meetup.date|date:"d-m-Y" }} в {{ meetup.date|date:"H:i" }}
+</p>
+<p>
+    <strong>Здесь будет карта</strong>
+</p>
+{% if meetup.website %}
+    <p>
+        <a href="{{ meetup.website }}" class="link-primary">Сайт митапа</a>
+    </p>
+{% endif %}

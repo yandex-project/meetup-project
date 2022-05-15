@@ -1,0 +1,28 @@
+{% extends 'includes/index.html' %}
+
+{% block title %}
+    Митап: {{ meetup.name }}
+{% endblock %}
+
+{% block main %}
+    <section class="container">
+        <div class="row">
+            <h1>
+                {{ meetup.name }}
+            </h1>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col">
+                {% include 'meetup/detail_page/left-side.html' %}
+            </div>
+            <div class="col">
+                {% include 'meetup/detail_page/right-side.html' %}
+            </div>
+        </div>
+
+
+    </section>
+{% endblock %}

@@ -3,9 +3,9 @@ from meetups.models import Meetup
 
 
 class Calendar(HTMLCalendar):
-
     DAYS = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
-    MONTHS = ["NONE", "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"]
+    MONTHS = ["NONE", "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь",
+              "Ноябрь", "Декабрь"]
 
     def __init__(self, year=None, month=None):
         self.year = year
@@ -18,7 +18,7 @@ class Calendar(HTMLCalendar):
         """
         return '<th class="%s">%s</th>' % (
             self.cssclasses_weekday_head[day], self.DAYS[day])
-    
+
     def formatmonthname(self, theyear, themonth, withyear=True):
         """
         Return a month name as a table row.

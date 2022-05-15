@@ -1,9 +1,8 @@
 <div class="col-sm-6" style="padding: 5px 5px">
     <div class="card" style="border-radius: 15px">
         <div class="card-body">
-            <div class="d-flex">
-                <h5 class="card-title">{{ item.name }}</h5>
-            </div>
+            <h5 class="card-title">{{ item.name }}</h5>
+            <h6 class="card-subtitle">{{ item.date|date:"d-m-Y" }} в {{ item.date|date:"H:i" }}</h6>
             <div class="d-flex flex-row-reverse">
                 {% for tag in item.tags.all %}
                     <span class="badge rounded-pill bg-success" style="margin: 0 0 0 5px">
@@ -12,7 +11,7 @@
                 {% endfor %}
             </div>
             <p class="card-text">{{ item.description }}</p>
-            <a href="/meetup/{{ item.slug }}" class="btn btn-primary">Открыть</a>
+            <a href="{% url 'meetup_detail' item.slug %}" class="btn btn-primary">Открыть</a>
         </div>
     </div>
 </div>

@@ -6,37 +6,66 @@
 
 {% block main %}
     <section class="container">
-        <h1>Профиль</h1>
-        <div>
-            <p><strong>Я</strong> очень крут</p>
+        <h1>{{ user }}</h1>
+        <hr id="meetups">
+        <div class="row">
+            {% if owner_meetups %}
+
+                <h2>
+                    Мои митапы:
+                </h2>
+                <div class="row">
+                    {% for item in owner_meetups %}
+                        {% include 'search/meetup_card.html' %}
+                    {% endfor %}
+                </div>
+                </div>
+
+            {% endif %}
+        <div class="row mt-2">
+            {% if participant_meetups %}
+
+                <h2>
+                    Предстоящие митапы:
+                </h2>
+                <div class="row">
+                    {% for item in participant_meetups %}
+                        {% include 'search/meetup_card.html' %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <hr id="information">
+        <div class="row">
+            <h2 class="mb-2">Мои данные:</h2>
+            <div class="col">
+                <h4>
+                    {{ user.description }}
+                </h4>
+                <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+                <br>
+                <a class="btn btn-danger" href="{% url 'logout' %}">Выйти</a>
+            </div>
+            <div class="col">
+                <h3 class="mt-3">Изменить данные</h3>
+
+                <form method="post">
+                    {% csrf_token %}
+                    {% for field in user_form %}
+                        <div class="mb-3">
+                            {{ field.errors }}
+                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary">Изменить</button>
+
+                </form>
+
+            </div>
+
         </div>
 
-        <h3>Изменить данные</h3>
-        <div class="container">
-            <form action="" method="post">
-                {% csrf_token %}
-                {% for field in user_form %}
-                    <div class="mb-3">
-                        {{ field.errors }}
-                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                        <input
-                                {% if field.widget_type == 'clearablefile' %}
-                                    type="file"
-                                {% else %}
-                                    type="{{ field.widget_type }}"
-                                {% endif %}
-                                    class="form-control"
-                                    name="{{ field.name }}"
-                                    autocomplete="{{ field.subwidgets.0.data.attrs.autocomplete }}"
-                                {% if field.subwidgets.0.data.value %}
-                                    value="{{ field.subwidgets.0.data.value }}"
-                                {% endif %}
-                        >
-                    </div>
-                {% endfor %}
-                <button type="submit" class="btn btn-primary">Изменить</button>
-            </form>
-            <a class="btn btn-danger mt-3" href="{% url 'logout' %}">Выйти</a>
-        </div>
+
     </section>
 {% endblock %}
