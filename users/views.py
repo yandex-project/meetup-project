@@ -5,15 +5,28 @@ import django.contrib.auth.views as admin_views
 
 from users.forms import UserForm, RegistrationForm
 from users.models import User
+from datetime import datetime
 
 
 class ProfilePage(View):
     template_name = 'users/profile.html'
 
     def get(self, request):
-        user_form = UserForm(instance=request.user)
+        user = request.user
+        user_form = UserForm(instance=user)
+
         context = {
             'user_form': user_form,
+            'user': user,
+            # 'owner_meetups': user.my_meetups.prefetch_related('tags').order_by('date'),
+            # 'participant_meetups': user.meetups.prefetch_related('tags').order_by('date'),
+            'owner_meetups': user.my_meetups.filter(
+                date__gte=datetime.today()
+            ).prefetch_related('tags').order_by('date'),
+            'participant_meetups': user.meetups.filter(
+                date__gte=datetime.today()
+            ).prefetch_related('tags').order_by('date'),
+
         }
 
         return render(request, self.template_name, context=context)
@@ -24,9 +37,20 @@ class ProfilePage(View):
             user_form.save()
             return redirect('profile')
         else:
-            user_form = UserForm(instance=request.user)
+            user = request.user
+
             context = {
                 'user_form': user_form,
+                'user': user,
+                # 'owner_meetups': user.my_meetups.prefetch_related('tags').order_by('date'),
+                # 'participant_meetups': user.meetups.prefetch_related('tags').order_by('date'),
+                'owner_meetups': user.my_meetups.filter(
+                    date__gte=datetime.today()
+                ).prefetch_related('tags').order_by('date'),
+                'participant_meetups': user.meetups.filter(
+                    date__gte=datetime.today()
+                ).prefetch_related('tags').order_by('date'),
+
             }
             return render(request, self.template_name, context=context)
 
