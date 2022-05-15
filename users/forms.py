@@ -4,7 +4,16 @@ from users.models import User
 from django import forms
 
 
-class RegistrationForm(UserCreationForm):
+class BaseForm(forms.BaseForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
+            if visible.widget_type == 'time':
+                visible.subwidgets[0].parent_widget.input_type = 'time'
+
+
+class RegistrationForm(UserCreationForm, BaseForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email')
@@ -16,7 +25,7 @@ class RegistrationForm(UserCreationForm):
         return cd['password2']
 
 
-class UserForm(forms.ModelForm):
+class UserForm(forms.ModelForm, BaseForm):
     class Meta:
         model = User
         fields = (

@@ -36,7 +36,7 @@
             {% endif %}
         </div>
         <hr id="information">
-        <div class="row" >
+        <div class="row">
             <h2 class="mb-2">Мои данные:</h2>
             <div class="col">
                 <h4>
@@ -53,21 +53,9 @@
                     {% csrf_token %}
                     {% for field in user_form %}
                         <div class="mb-3">
-                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
                             {{ field.errors }}
-                            <input
-                                    {% if field.widget_type == 'clearablefile' %}
-                                        type="file"
-                                    {% else %}
-                                        type="{{ field.widget_type }}"
-                                    {% endif %}
-                                        class="form-control"
-                                        name="{{ field.name }}"
-                                        autocomplete="{{ field.subwidgets.0.data.attrs.autocomplete }}"
-                                    {% if field.subwidgets.0.data.value %}
-                                        value="{{ field.subwidgets.0.data.value }}"
-                                    {% endif %}
-                            >
+                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                            {{ field }}
                         </div>
                     {% endfor %}
                     <button type="submit" class="btn btn-primary">Изменить</button>
