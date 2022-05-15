@@ -11,7 +11,7 @@ if os.path.exists(dotenv_path):
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -163,3 +163,6 @@ CSRF_COOKIE_HTTPONLY = False
 DJEYM_YMAPS_API_KEY = os.getenv('DJEYM_YMAPS_API_KEY')
 
 DJEYM_YMAPS_DOWNLOAD_MODE = 'debug' if DEBUG else 'release'
+
+
+STATIC_ROOT = BASE_DIR / 'static_root'

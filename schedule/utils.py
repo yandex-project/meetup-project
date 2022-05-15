@@ -61,4 +61,5 @@ class Calendar(HTMLCalendar):
         calendar += f"{self.formatweekheader()}\n"
         for week in self.monthdays2calendar(self.year, self.month):
             calendar += f"{self.formatweek(week, meetups)}\n"
+        calendar += '</table>'
         return calendar

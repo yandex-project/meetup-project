@@ -26,7 +26,7 @@ class ScheduleView(ListView):
 
         # Call the formatmonth method, which returns our calendar as a table
         html_cal = cal.formatmonth(withyear=True)
-        context['calendar'] = str(html_cal) + '</table>'
+        context['calendar'] = html_cal
 
         context['prev_month'] = prev_month(date)
         context['next_month'] = next_month(date)
