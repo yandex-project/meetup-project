@@ -6,7 +6,7 @@ def homepage(request):
     template_name = 'homepage/index.html'
     context = {}
 
-    return error_404_view(request, "asjkdjfh")
+    # return error_404_view(request, "asjkdjfh")
     return render(request, template_name, context)
 
 
