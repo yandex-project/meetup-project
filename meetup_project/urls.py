@@ -16,3 +16,7 @@ urlpatterns = [
     path('map/', include('maps.urls')),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+handler404 = 'homepage.views.error_404_view'
+handler500 = 'homepage.views.error_500_view'

@@ -1,0 +1,14 @@
+{% extends 'includes/index.html' %}
+
+{% load static %}
+
+{% block title %}
+    404 Страница не найдена 
+{% endblock %}
+
+{% block main %}
+    <section class="container">
+        <img src="{% static 'img/a404_page.png' %}">
+        <h1> 404 Страница не найдена </h1>
+    </section>
+{% endblock %}
