@@ -13,6 +13,7 @@ class CreateMeetupView(View):
     def get(self, request):
         form = MeetupForm()
         context = {
+            'text': 'Добавление митапа',
             'form': form,
         }
 
@@ -21,7 +22,6 @@ class CreateMeetupView(View):
     def post(self, request):
         form = MeetupForm(request.POST)
         if form.is_valid():
-            print(form.cleaned_data['is_visible'])
             new_meetup = Meetup.objects.create(
                 name=form.cleaned_data['name'],
                 date=form.cleaned_data['date'],
@@ -31,6 +31,7 @@ class CreateMeetupView(View):
                 is_visible=form.cleaned_data['is_visible'],
                 owner=request.user
             )
+
             for tag in form.cleaned_data['tags']:
                 new_meetup.tags.add(tag)
 
@@ -38,6 +39,52 @@ class CreateMeetupView(View):
             return redirect('meetup_detail', new_meetup.slug)
 
         context = {
+            'text': 'Добавление митапа',
+            'form': form,
+        }
+
+        return render(request, self.template_name, context)
+
+
+class UpdateMeetupView(View):
+    template_name = 'meetup/create_meetup/index.html'
+
+    def get(self, request, slug):
+        meetup = Meetup.objects.get(slug=slug)
+
+        if request.user != meetup.owner:
+            return HttpResponseNotFound()
+
+        form = MeetupForm(instance=meetup)
+        context = {
+            'text': 'Изменение митапа',
+            'form': form,
+        }
+
+        return render(request, self.template_name, context)
+
+    def post(self, request, slug):
+        meetup = Meetup.objects.get(slug=slug)
+
+        if request.user != meetup.owner:
+            return HttpResponseNotFound()
+
+        form = MeetupForm(request.POST, instance=meetup)
+        if form.is_valid():
+            meetup.name = form.cleaned_data['name']
+            meetup.date = form.cleaned_data['date']
+            meetup.description = form.cleaned_data['description']
+            meetup.place = form.cleaned_data['place']
+            meetup.website = form.cleaned_data['website']
+            meetup.is_visible = form.cleaned_data['is_visible']
+
+            # TODO: update tags
+
+            meetup.save()
+            return redirect('meetup_detail', meetup.slug)
+
+        context = {
+            'text': 'Изменение митапа',
             'form': form,
         }
 
@@ -110,10 +157,11 @@ class UpdateLectureView(View):
 
     def get(self, request, slug, pk):
         meetup = Meetup.objects.get(slug=slug)
-        if request.user != meetup.owner:
+        lecture = meetup.lectures.get(pk=pk)
+
+        if not (request.user == meetup.owner or request.user in lecture.lectors.all()):
             return HttpResponseNotFound()
 
-        lecture = meetup.lectures.get(pk=pk)
         form = LectureForm(instance=lecture)
 
         context = {
@@ -125,10 +173,12 @@ class UpdateLectureView(View):
 
     def post(self, request, slug, pk):
         meetup = Meetup.objects.get(slug=slug)
-        if request.user != meetup.owner:
-            return HttpResponseNotFound()
         lecture = meetup.lectures.get(pk=pk)
-        form = LectureForm(data=request.POST)
+
+        if not (request.user == meetup.owner or request.user in lecture.lectors.all()):
+            return HttpResponseNotFound()
+
+        form = LectureForm(data=request.POST, instance=lecture)
 
         if form.is_valid():
             lecture.name = form.cleaned_data['name']
