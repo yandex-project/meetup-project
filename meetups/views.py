@@ -4,7 +4,44 @@ from django.views import View
 from django.http import HttpResponseNotFound
 
 from meetups.models import Meetup, Lecture
-from meetups.forms import LectureForm
+from meetups.forms import LectureForm, MeetupForm
+
+
+class CreateMeetupView(View):
+    template_name = 'meetup/create_meetup/index.html'
+
+    def get(self, request):
+        form = MeetupForm()
+        context = {
+            'form': form,
+        }
+
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        form = MeetupForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data['is_visible'])
+            new_meetup = Meetup.objects.create(
+                name=form.cleaned_data['name'],
+                date=form.cleaned_data['date'],
+                description=form.cleaned_data['description'],
+                place=form.cleaned_data['place'],
+                website=form.cleaned_data['website'],
+                is_visible=form.cleaned_data['is_visible'],
+                owner=request.user
+            )
+            for tag in form.cleaned_data['tags']:
+                new_meetup.tags.add(tag)
+
+            new_meetup.save()
+            return redirect('meetup_detail', new_meetup.slug)
+
+        context = {
+            'form': form,
+        }
+
+        return render(request, self.template_name, context)
 
 
 class MeetupDetailView(View):
