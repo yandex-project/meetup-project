@@ -14,6 +14,14 @@
                             class="link-primary">{{ lector }}</a>
                     {% endfor %}
                 </p>
+
+                {% if request.user == meetup.owner or request.user in lecture.lectors.all %}
+                    <p>
+                        Для лекторов и админов:
+                        <a href="{% url 'update_lecture' meetup.slug lecture.pk %}" class="link-primary">Изменить</a>
+                    </p>
+                {% endif %}
+
             </div>
         </div>
     {% endfor %}

@@ -12,6 +12,17 @@ class BaseForm(forms.BaseForm):
             if visible.widget_type == 'time':
                 visible.subwidgets[0].parent_widget.input_type = 'time'
 
+            if visible.widget_type == 'datetime':
+                visible.subwidgets[0].parent_widget.input_type = 'datetime-local'
+
+                # TODO: убери этот костыль
+                # For render value in html
+                if visible.initial:
+                    visible.initial = str(visible.initial).replace(' ', 'T').split('+')[0]
+
+            if visible.widget_type == 'date':
+                visible.subwidgets[0].parent_widget.input_type = 'date'
+
 
 class RegistrationForm(UserCreationForm, BaseForm):
     class Meta:

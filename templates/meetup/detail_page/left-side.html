@@ -16,3 +16,8 @@
         <a href="{{ meetup.website }}" class="link-primary">Сайт митапа</a>
     </p>
 {% endif %}
+{% if request.user == meetup.owner %}
+    <p>
+        <a href="{% url 'update_meetup' meetup.slug %}" class="btn btn-primary">Изменить митап</a>
+    </p>
+{% endif %}
