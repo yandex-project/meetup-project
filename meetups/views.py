@@ -33,6 +33,7 @@ class CreateLectureView(View):
         meetup = Meetup.objects.get(slug=slug)
         if request.user != meetup.owner:
             return HttpResponseNotFound()
+
         form = LectureForm()
         context = {
             'meetup_name': meetup.name,
@@ -45,6 +46,7 @@ class CreateLectureView(View):
         meetup = Meetup.objects.get(slug=slug)
         if request.user != meetup.owner:
             return HttpResponseNotFound()
+
         form = LectureForm(request.POST)
         if form.is_valid():
             new_lecture = Lecture.objects.create(
@@ -60,6 +62,51 @@ class CreateLectureView(View):
 
             return redirect('meetup_detail', slug)
         context = {
+            'meetup_name': meetup.name,
             'form': form
         }
+        return render(request, self.template_name, context)
+
+
+class UpdateLectureView(View):
+    template_name = 'meetup/add_lecture/index.html'
+
+    def get(self, request, slug, pk):
+        meetup = Meetup.objects.get(slug=slug)
+        if request.user != meetup.owner:
+            return HttpResponseNotFound()
+
+        lecture = meetup.lectures.get(pk=pk)
+        form = LectureForm(instance=lecture)
+
+        context = {
+            'meetup_name': meetup.name,
+            'form': form
+        }
+
+        return render(request, self.template_name, context)
+
+    def post(self, request, slug, pk):
+        meetup = Meetup.objects.get(slug=slug)
+        if request.user != meetup.owner:
+            return HttpResponseNotFound()
+        lecture = meetup.lectures.get(pk=pk)
+        form = LectureForm(data=request.POST)
+
+        if form.is_valid():
+            lecture.name = form.cleaned_data['name']
+            lecture.description = form.cleaned_data['description']
+            lecture.time = form.cleaned_data['time']
+
+            # TODO: update lectors
+
+            lecture.save()
+
+            return redirect('meetup_detail', slug)
+
+        context = {
+            'meetup_name': meetup.name,
+            'form': form
+        }
+
         return render(request, self.template_name, context)
