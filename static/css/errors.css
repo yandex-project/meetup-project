@@ -1,0 +1,12 @@
+main .container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+h1 {
+    text-align: center;
+}
+img {
+    max-width: 800px;
+}

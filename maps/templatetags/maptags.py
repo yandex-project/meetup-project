@@ -4,16 +4,18 @@ from django import template
 
 from djeym.models import Map
 from djeym.views import vue_vendors_css_js
+from urllib.parse import quote
 
 register = template.Library()
 
 
 @register.inclusion_tag('maps/includes/ymaps_front_filter.html')
-def djeym_yandex_map_filter(slug, markers, lang='en'):
+def djeym_yandex_map_filter(slug, filters, lang='en'):
     """Load the map to the front page."""
 
     ymap = Map.objects.filter(slug=slug, active=True).first()
-    ctx = {'ymap': ymap, 'markers': list(markers)}
+    filters = quote(str(filters).replace('\'', '\"'))
+    ctx = {'ymap': ymap, 'filters': filters}
     if ymap is not None:
         general_settings = ymap.general_settings
         ctx['lang'] = lang or 'en',

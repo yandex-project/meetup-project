@@ -5,7 +5,8 @@
     <script src="{% static "djeym/js/jquery-regex.min.js" %}"></script>
     {% comment %}
          в 'map_slug' в контексте должно быть записано значение поля slug нужной карты
-         в 'markers' в контексте должен быть список id нужных Marker объектов
+         в 'filters' в контексте должен быть словарь поисковых фильтров по типу {'name': 'value', ...}
+         все фильтры можно посмотреть в meetups/managers.py MeetupManager.get_meetups_from_context()
     {% endcomment %}
-    {% djeym_yandex_map_filter slug=map_slug markers=markers lang=request.LANGUAGE_CODE %}
+    {% djeym_yandex_map_filter slug=map_slug filters=filters lang=request.LANGUAGE_CODE %}
 </div>

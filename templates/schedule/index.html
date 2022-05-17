@@ -23,3 +23,11 @@
 {% block css %}
     <link href="{% static 'css/calendar.css' %}" rel="stylesheet">
 {% endblock %}
+
+{% block js %}
+    <script>
+        $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip({html: true});
+        });
+    </script>
+{% endblock %}
