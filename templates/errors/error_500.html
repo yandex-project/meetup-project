@@ -3,11 +3,16 @@
 {% load static %}
 
 {% block title %}
-    500 Ошибка
+    500 Ошибка обрщения к серверу
 {% endblock %}
 
 {% block main %}
     <section class="container">
+        <img src="{% static 'img/error_500.png' %}">
         <h1> 500 Ошибка обращения к серверу </h1>
     </section>
+{% endblock %}
+
+{% block css %}
+    <link href="{% static 'css/errors.css' %}" rel="stylesheet">
 {% endblock %}

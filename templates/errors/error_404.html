@@ -8,7 +8,11 @@
 
 {% block main %}
     <section class="container">
-        <img src="{% static 'img/a404_page.png' %}">
+        <img src="{% static 'img/error_404.png' %}">
         <h1> 404 Страница не найдена </h1>
     </section>
+{% endblock %}
+
+{% block css %}
+    <link href="{% static 'css/errors.css' %}" rel="stylesheet">
 {% endblock %}
