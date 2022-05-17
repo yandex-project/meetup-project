@@ -90,7 +90,7 @@ class Meetup(models.Model):
     # get meetup href in HTML format
     @property
     def get_html_url(self):
-        url = reverse("schedule:meetup-detail", args=(self.id,))
+        url = reverse("meetup_detail", args=(self.slug,))
         tip = f"{self.date.hour}:{self.date.minute}<br>{self.description[:50]}"
         return f"""<a href="{url}" data-toggle="tooltip" class="meetup" title="{tip}"> {self.name} </a> """
 
