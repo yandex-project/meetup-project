@@ -1,5 +1,6 @@
 import random
 import string
+import datetime
 
 from unidecode import unidecode
 
@@ -91,7 +92,8 @@ class Meetup(models.Model):
     @property
     def get_html_url(self):
         url = reverse("schedule:meetup-detail", args=(self.id,))
-        return f'<a href="{url}"> {self.name} </a>'
+        tip = f"{self.date.hour}:{self.date.minute}<br>{self.description[:50]}"
+        return f"""<a href="{url}" data-toggle="tooltip" class="meetup" title="{tip}"> {self.name} </a> """
 
 
 class Tag(models.Model):

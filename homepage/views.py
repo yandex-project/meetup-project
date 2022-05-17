@@ -5,12 +5,16 @@ def homepage(request):
     template_name = 'homepage/index.html'
     context = {}
 
-    # return error_404_view(request, "asjkdjfh")
     return render(request, template_name, context)
 
 
 def error_404_view(request, exception):
     template_name = 'errors/error_404.html'
+    return render(request, template_name)
+
+
+def error_405_view(request):
+    template_name = 'errors/error_405.html'
     return render(request, template_name)
 
 
