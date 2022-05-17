@@ -1,6 +1,5 @@
 import random
 import string
-import datetime
 
 from unidecode import unidecode
 
