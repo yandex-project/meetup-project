@@ -102,12 +102,20 @@ class MeetupDetailView(View):
                     'lectures',
                     Lecture.objects.prefetch_related(
                         'lectors'
-                    )
+                    ).order_by('time')
                 )
             ).get(slug=slug)
         }
 
         return render(request, self.template_name, context)
+
+
+def delete_meetup(request, slug):
+    meetup = Meetup.objects.get(slug=slug)
+    if request.user == meetup.owner:
+        meetup.delete()
+        return redirect('search')
+    return HttpResponseNotFound()
 
 
 class CreateLectureView(View):

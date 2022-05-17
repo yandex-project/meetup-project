@@ -19,8 +19,15 @@
                     <p>
                         Для лекторов и админов:
                         <a href="{% url 'update_lecture' meetup.slug lecture.pk %}" class="link-primary">Изменить</a>
+
                     </p>
+                    {% if request.user == meetup.owner %}
+                        <p>
+                            <a href="{% url 'update_lecture' meetup.slug lecture.pk %}" class="btn btn-danger">Удалить лекцию</a>
+                        </p>
+                    {% endif %}
                 {% endif %}
+
 
             </div>
         </div>
