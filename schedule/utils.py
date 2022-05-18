@@ -1,5 +1,5 @@
 from calendar import HTMLCalendar
-from meetups.models import Meetup
+from users.models import User
 
 
 class Calendar(HTMLCalendar):
@@ -7,10 +7,11 @@ class Calendar(HTMLCalendar):
     MONTHS = ["NONE", "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь",
               "Ноябрь", "Декабрь"]
 
-    def __init__(self, year=None, month=None):
+    def __init__(self, year=None, month=None, user=None):
         self.year = year
         self.month = month
         self.meetups = []
+        self.user = user
         super(Calendar, self).__init__()
 
     def formatweekday(self, day):
@@ -50,7 +51,7 @@ class Calendar(HTMLCalendar):
 
     # formats a month as a table
     def formatmonth(self, withyear=True, **kwargs):
-        meetups = Meetup.objects.filter(
+        meetups = self.user.meetups.filter(
             date__year=self.year, date__month=self.month
         ).all()
         self.meetups = [[] for i in range(32)]

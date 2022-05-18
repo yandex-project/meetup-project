@@ -22,7 +22,7 @@ class ScheduleView(ListView):
             return context
 
         # Instantiate our calendar class with today's year and date
-        cal = Calendar(date.year, date.month)
+        cal = Calendar(date.year, date.month, user=self.request.user)
 
         # Call the formatmonth method, which returns our calendar as a table
         html_cal = cal.formatmonth(withyear=True)
