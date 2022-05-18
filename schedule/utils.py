@@ -1,5 +1,4 @@
 from calendar import HTMLCalendar
-from users.models import User
 
 
 class Calendar(HTMLCalendar):
