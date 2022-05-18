@@ -24,13 +24,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # apps
-    'users',
-    'homepage',
-    'meetups',
-    'schedule',
-    'maps',
-
     # plugins
     'debug_toolbar',
     'imagekit',
@@ -39,6 +32,12 @@ INSTALLED_APPS = [
     'colorful',
     'adminsortable',
     'djeym',
+    # apps
+    'users',
+    'homepage',
+    'meetups',
+    'schedule',
+    'maps',
 ]
 
 MIDDLEWARE = [

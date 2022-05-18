@@ -19,6 +19,9 @@ class Marker(models.Model):
         related_name='marker'
     )
 
+    def __str__(self):
+        return f'Marker for meetup {self.meetup}'
+
 
 @receiver(post_save, sender=Meetup)
 def create_meetup_placemark(sender, instance, created, **kwargs):
