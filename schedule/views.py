@@ -21,11 +21,15 @@ class ScheduleView(ListView):
             context["date_error"] = "<h1>Такай даты не существует 🥶</h1>"
             return context
 
+        self.request.GET._mutable = True
+        self.request.GET.pop('month', None)
+        query = self.request.GET
+
         # Instantiate our calendar class with today's year and date
         cal = Calendar(date.year, date.month, user=self.request.user)
 
         # Call the formatmonth method, which returns our calendar as a table
-        html_cal = cal.formatmonth(withyear=True)
+        html_cal = cal.formatmonth(query, withyear=True)
         context['calendar'] = html_cal
 
         context['prev_month'] = prev_month(date)

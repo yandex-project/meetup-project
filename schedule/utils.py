@@ -1,5 +1,4 @@
 from calendar import HTMLCalendar
-from users.models import User
 
 
 class Calendar(HTMLCalendar):
@@ -50,10 +49,9 @@ class Calendar(HTMLCalendar):
         return f"<tr> {week} </tr>"
 
     # formats a month as a table
-    def formatmonth(self, withyear=True, **kwargs):
-        meetups = self.user.meetups.filter(
-            date__year=self.year, date__month=self.month
-        ).all()
+    def formatmonth(self, query, withyear=True, **kwargs):
+        meetups = self.user.meetups.get_meetups_from_context(query).filter(date__year=self.year, date__month=self.month).all()
+        
         self.meetups = [[] for i in range(32)]
         for meetup in meetups:
             self.meetups[meetup.date.day].append(meetup.get_html_url)
