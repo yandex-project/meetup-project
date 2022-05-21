@@ -9,6 +9,7 @@ from django.utils.text import slugify
 
 from users.models import User
 from meetups.managers import MeetupManager
+from meetups.validators import *
 
 
 def rand_slug():
@@ -35,7 +36,8 @@ class Meetup(models.Model):
     place = models.CharField(
         verbose_name='Место',
         max_length=250,
-        help_text='Максимальная длинна 250'
+        help_text='Максимальная длинна 250',
+        validators=[validate_exists_address]
     )
 
     owner = models.ForeignKey(
