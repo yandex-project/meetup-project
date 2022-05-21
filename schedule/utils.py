@@ -50,8 +50,10 @@ class Calendar(HTMLCalendar):
 
     # formats a month as a table
     def formatmonth(self, query, withyear=True, **kwargs):
-        meetups = self.user.meetups.get_meetups_from_context(query).filter(date__year=self.year, date__month=self.month).all()
-        
+        meetups = self.user.meetups.get_meetups_from_context(query).filter(
+            date__year=self.year, date__month=self.month
+            ).all()
+
         self.meetups = [[] for i in range(32)]
         for meetup in meetups:
             self.meetups[meetup.date.day].append(meetup.get_html_url)
