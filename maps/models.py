@@ -1,9 +1,9 @@
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+# from django.db.models.signals import post_save
+# from django.dispatch import receiver
 from meetups.models import Meetup
 from djeym.models import Placemark
-from maps.utils import address_to_coords
+# from maps.utils import address_to_coords
 
 
 class Marker(models.Model):
