@@ -1,5 +1,4 @@
-from django.core.management.base import BaseCommand, CommandError
-from django.db.models.fields.files import FieldFile
+from django.core.management.base import BaseCommand
 from django.core.files.base import ContentFile
 from meetup_project.settings import BASE_DIR
 from djeym.models import IconCollection, ClusterIcon, MarkerIcon, Placemark, CategoryPlacemark, Map, TileSource
@@ -23,9 +22,9 @@ class Command(BaseCommand):
 
         marker_icon = BASE_DIR / 'maps/static/maps/default_map_assets/default_marker_icon.svg'
         with open(marker_icon, "rb") as icon:
-            icon_marker = MarkerIcon.objects.create(svg=ContentFile(icon.read(), 'default_marker_icon.svg'),
-                                                    title='default',
-                                                    icon_collection=icon_collection)
+            MarkerIcon.objects.create(svg=ContentFile(icon.read(), 'default_marker_icon.svg'),
+                                      title='default',
+                                      icon_collection=icon_collection)
 
         tile_sources = BASE_DIR / 'maps/static/maps/default_map_assets/Tile_Sources.json'
         with open(tile_sources) as json_file:
@@ -63,9 +62,9 @@ class Command(BaseCommand):
                                                          title='default',
                                                          )
 
-        base_mark = Placemark.objects.create(ymap=ymap,
-                                             category=mark_category,
-                                             header='base',
-                                             icon_slug='default',
-                                             active=False
-                                             )
+        Placemark.objects.create(ymap=ymap,
+                                 category=mark_category,
+                                 header='base',
+                                 icon_slug='default',
+                                 active=False
+                                 )

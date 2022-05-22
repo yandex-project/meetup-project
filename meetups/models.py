@@ -9,7 +9,7 @@ from django.utils.text import slugify
 
 from users.models import User
 from meetups.managers import MeetupManager
-from meetups.validators import *
+from meetups.validators import validate_exists_address
 
 
 def rand_slug():
