@@ -27,17 +27,19 @@ class Marker(models.Model):
 @receiver(post_save, sender=Meetup)
 def create_meetup_placemark(sender, instance, created, **kwargs):
     if created:
-        mark = Placemark.objects.create(ymap=get_global_map(),
-                                        category=CategoryPlacemark.objects.get(active=True),
+        base = Placemark.objects.get(header='base')
+        mark = Placemark.objects.create(
+                                        ymap=base.ymap,
+                                        category=base.category,
                                         header=instance.name,
                                         body=instance.description,
                                         footer=instance.date,
                                         coordinates=address_to_coords(instance.place),
-                                        icon_slug='education')
+                                        icon_slug=base.icon_slug
+        )
         Marker.objects.create(meetup=instance, placemark=mark)
 
 
 @receiver(post_save, sender=Meetup)
 def save_meetup_placemark(sender, instance, **kwargs):
-    instance.marker.placemark.save()
     instance.marker.save()
