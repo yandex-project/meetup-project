@@ -38,6 +38,7 @@ class AjaxUploadPlacemarks(View):
         geoobjects = Meetup.objects.get_meetups_from_context(ctx)
         geoobjects = geoobjects.values_list('marker__placemark__json_code',
                                             flat=True)[offset:limit]
+        geoobjects = list(filter(lambda x: x, geoobjects))
 
         response_data = '[' + ','.join(geoobjects) + ']'
 
