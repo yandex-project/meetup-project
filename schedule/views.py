@@ -21,15 +21,19 @@ class ScheduleView(ListView):
             context["date_error"] = "<h1>Такай даты не существует 🥶</h1>"
             return context
 
+        self.request.GET._mutable = True
+        self.request.GET.pop('month', None)
+        query = self.request.GET
+
         # Instantiate our calendar class with today's year and date
         cal = Calendar(date.year, date.month, user=self.request.user)
 
         # Call the formatmonth method, which returns our calendar as a table
-        html_cal = cal.formatmonth(withyear=True)
+        html_cal = cal.formatmonth(query, withyear=True)
         context['calendar'] = html_cal
 
-        context['prev_month'] = prev_month(date)
-        context['next_month'] = next_month(date)
+        context['prev_month'] = prev_month(date, query)
+        context['next_month'] = next_month(date, query)
 
         return context
 
@@ -43,16 +47,16 @@ def get_date(cur_month):
     return datetime.datetime.today()
 
 
-def prev_month(date):
+def prev_month(date, query):
     first = date.replace(day=1)
     month = first - datetime.timedelta(days=1)
-    data = 'month=' + str(month.year) + '-' + str(month.month)
+    data = 'month=' + str(month.year) + '-' + str(month.month) + '&' + query.urlencode()
     return data
 
 
-def next_month(date):
+def next_month(date, query):
     days_in_month = calendar.monthrange(date.year, date.month)[1]
     last = date.replace(day=days_in_month)
     month = last + datetime.timedelta(days=1)
-    data = 'month=' + str(month.year) + '-' + str(month.month)
+    data = 'month=' + str(month.year) + '-' + str(month.month) + '&' + query.urlencode()
     return data
