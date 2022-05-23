@@ -97,7 +97,7 @@ class MeetupDetailView(View):
     def get(self, request, slug):
         context = {
             # TODO: add this query to manager
-            'meetup': Meetup.objects.select_related('owner').prefetch_related(
+            'meetup': Meetup.objects.select_related('owner').select_related('marker').prefetch_related(
                 Prefetch(
                     'lectures',
                     Lecture.objects.prefetch_related(

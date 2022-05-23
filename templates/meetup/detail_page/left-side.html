@@ -1,3 +1,5 @@
+{% load maptags %}
+
 <h4>
     {{ meetup.description }}
 </h4>
@@ -9,7 +11,8 @@
     Дата проведения: {{ meetup.date|date:"d-m-Y" }} в {{ meetup.date|date:"H:i" }}
 </p>
 <p>
-    <strong>Здесь будет карта</strong>
+    Адрес: {{ meetup.place }}
+    <img src="{% static_map_url meetup=meetup %}" alt="Здесь могла быть карта">
 </p>
 {% if meetup.website %}
     <p>
