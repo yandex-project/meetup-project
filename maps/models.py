@@ -1,9 +1,9 @@
 from django.db import models
-# from django.db.models.signals import post_save
-# from django.dispatch import receiver
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from meetups.models import Meetup
 from djeym.models import Placemark
-# from maps.utils import address_to_coords
+from maps.utils import address_to_coords
 
 
 class Marker(models.Model):
@@ -24,22 +24,29 @@ class Marker(models.Model):
         return f'Marker for meetup {self.meetup}'
 
 
-# @receiver(post_save, sender=Meetup)
-# def create_meetup_placemark(sender, instance, created, **kwargs):
-#     if created:
-#         base = Placemark.objects.get(header='base')
-#         mark = Placemark.objects.create(
-#                                         ymap=base.ymap,
-#                                         category=base.category,
-#                                         header=instance.name,
-#                                         body=instance.description,
-#                                         footer=instance.date,
-#                                         coordinates=address_to_coords(instance.place),
-#                                         icon_slug=base.icon_slug
-#         )
-#         Marker.objects.create(meetup=instance, placemark=mark)
-#
-#
-# @receiver(post_save, sender=Meetup)
-# def save_meetup_placemark(sender, instance, **kwargs):
-#     instance.marker.save()
+@receiver(post_save, sender=Meetup)
+def create_meetup_placemark(sender, instance, created, **kwargs):
+    if created:
+        base = Placemark.objects.get(header='base')
+        mark = Placemark.objects.create(
+            ymap=base.ymap,
+            category=base.category,
+            header=instance.name,
+            body=instance.description,
+            footer=instance.date,
+            coordinates=address_to_coords(instance.place),
+            icon_slug=base.icon_slug
+        )
+        Marker.objects.create(meetup=instance, placemark=mark)
+    else:
+        mark = instance.marker.placemark
+        mark.header = instance.name
+        mark.body = instance.description
+        mark.footer = instance.date
+        mark.coordinates = address_to_coords(instance.place)
+        mark.save()
+
+
+@receiver(post_save, sender=Meetup)
+def save_meetup_placemark(sender, instance, **kwargs):
+    instance.marker.save()

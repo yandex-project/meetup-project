@@ -13,6 +13,7 @@
                 <li><a class="nav-link" href="{% url 'homepage' %}">Домой</a></li>
                 <li><a class="nav-link" href="{% url 'search' %}">Поиск</a></li>
                 <li><a class="nav-link" href="{% url 'schedule:schedule' %}">Календарь</a></li>
+                <li><a class="nav-link" href="{% url 'global_map' %}">Карта</a></li>
                 {% if request.user.is_authenticated %}
                     <li><a class="nav-link" href="{% url 'create_meetup' %}">Создать митап</a></li>
                     <li><a class="getstarted" href='{% url 'profile' %}'>Профиль</a></li>
