@@ -29,3 +29,18 @@ def djeym_yandex_map_filter(slug, filters, lang='en'):
         vue_vendors = vue_vendors_css_js('front')
         ctx.update(vue_vendors)
     return ctx
+
+
+@register.simple_tag()
+def static_map_url(meetup):
+    # собираем ссылку для yandex maps static api
+    base = 'https://static-maps.yandex.ru/1.x/?'
+    type = 'map'  # тип карты: схема с названиями
+    coords = meetup.marker.placemark.coordinates.strip('[]').split(',')
+    coords.reverse()  # в placemark почему-то в другом порядке координаты
+    coords = ','.join(coords)
+    ll = coords  # координаты центра карты
+    size = '400,300'  # размер изображения
+    z = 15  # уровень масштабирования
+    pt = coords + ',org'  # описание выводимой метки
+    return f'{base}l={type}&ll={ll}&size={size}&z={z}&pt={pt}'
