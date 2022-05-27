@@ -39,7 +39,7 @@ class ScheduleView(ListView):
 
 def get_date(cur_month):
     if not cur_month:
-        return datetime.datetime.today() 
+        return datetime.datetime.today()
 
     if cur_month.count('-') == 2:
         return datetime.datetime.strptime(cur_month, '%Y-%m-%d')
