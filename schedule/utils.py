@@ -2,9 +2,9 @@ from calendar import HTMLCalendar
 
 
 class Calendar(HTMLCalendar):
-    DAYS = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
-    MONTHS = ["NONE", "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь",
-              "Ноябрь", "Декабрь"]
+    DAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
+    MONTHS = ['NONE', 'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь',
+              'Ноябрь', 'Декабрь']
 
     def __init__(self, year=None, month=None, user=None):
         self.year = year
@@ -36,17 +36,17 @@ class Calendar(HTMLCalendar):
         meetups = self.meetups[day]
         data = ""
         for meetup in meetups:
-            data += f"<li> {meetup} </li>"
+            data += f'<li> {meetup} </li>'
         if day != 0:
-            return f"<td><span class='date'>{day}</span><ul> {data} </ul></td>"
-        return "<td></td>"
+            return f'<td><span class="date">{day}</span><ul> {data} </ul></td>'
+        return '<td></td>'
 
     # formats a week as a tr
     def formatweek(self, theweek):
         week = ""
         for data, weekday in theweek:
             week += self.formatday(data)
-        return f"<tr> {week} </tr>"
+        return f'<tr> {week} </tr>'
 
     # formats a month as a table
     def formatmonth(self, query, withyear=True, **kwargs):
@@ -61,10 +61,10 @@ class Calendar(HTMLCalendar):
             '<table border="0" cellpadding="0" cellspacing="0" class="calendar">\n'
         )
         calendar += (
-            f"{self.formatmonthname(self.year, self.month, withyear=withyear)}\n"
+            f'{self.formatmonthname(self.year, self.month, withyear=withyear)}\n'
         )
-        calendar += f"{self.formatweekheader()}\n"
+        calendar += f'{self.formatweekheader()}\n'
         for week in self.monthdays2calendar(self.year, self.month):
-            calendar += f"{self.formatweek(week)}\n"
+            calendar += f'{self.formatweek(week)}\n'
         calendar += '</table>'
         return calendar
