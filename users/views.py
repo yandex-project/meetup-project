@@ -1,8 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-
-import django.contrib.auth.views as admin_views
-
 from users.forms import UserForm, RegistrationForm
 from users.models import User
 from datetime import datetime
@@ -26,9 +23,7 @@ class ProfilePage(View):
             'participant_meetups': user.meetups.filter(
                 date__gte=datetime.today()
             ).prefetch_related('tags').order_by('date'),
-
         }
-
         return render(request, self.template_name, context=context)
 
     def post(self, request):
@@ -50,7 +45,6 @@ class ProfilePage(View):
                 'participant_meetups': user.meetups.filter(
                     date__gte=datetime.today()
                 ).prefetch_related('tags').order_by('date'),
-
             }
             return render(request, self.template_name, context=context)
 
@@ -99,36 +93,3 @@ class SignupView(View):
         else:
             context = {'form': form}
             return render(request, self.template_name, context)
-
-
-# Django auth views
-class LoginView(admin_views.LoginView):
-    template_name = 'users/auth/login.html'
-
-
-class PasswordChangeDoneView(admin_views.PasswordChangeDoneView):
-    template_name = 'users/auth/password_change_done.html'
-
-
-class LogoutView(admin_views.LogoutView):
-    template_name = 'users/auth/logout.html'
-
-
-class PasswordResetView(admin_views.PasswordResetView):
-    template_name = 'users/auth/password_reset.html'
-
-
-class PasswordResetDoneView(admin_views.PasswordResetDoneView):
-    template_name = 'users/auth/password_reset_done.html'
-
-
-class PasswordResetConfirmView(admin_views.PasswordResetConfirmView):
-    template_name = 'users/auth/reset.html'
-
-
-class PasswordResetCompleteView(admin_views.PasswordResetCompleteView):
-    template_name = 'users/auth/reset_done.html'
-
-
-class PasswordChangeView(admin_views.PasswordChangeView):
-    template_name = 'users/auth/password_change.html'

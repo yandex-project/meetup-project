@@ -16,7 +16,6 @@ class CreateMeetupView(View):
             'text': 'Добавление митапа',
             'form': form,
         }
-
         return render(request, self.template_name, context)
 
     def post(self, request):
@@ -31,10 +30,8 @@ class CreateMeetupView(View):
                 is_visible=form.cleaned_data['is_visible'],
                 owner=request.user
             )
-
             for tag in form.cleaned_data['tags']:
                 new_meetup.tags.add(tag)
-
             new_meetup.save()
             return redirect('meetup_detail', new_meetup.slug)
 
@@ -42,7 +39,6 @@ class CreateMeetupView(View):
             'text': 'Добавление митапа',
             'form': form,
         }
-
         return render(request, self.template_name, context)
 
 
@@ -60,7 +56,6 @@ class UpdateMeetupView(View):
             'text': 'Изменение митапа',
             'form': form,
         }
-
         return render(request, self.template_name, context)
 
     def post(self, request, slug):
@@ -87,7 +82,6 @@ class UpdateMeetupView(View):
             'text': 'Изменение митапа',
             'form': form,
         }
-
         return render(request, self.template_name, context)
 
 
@@ -106,7 +100,6 @@ class MeetupDetailView(View):
                 )
             ).get(slug=slug)
         }
-
         return render(request, self.template_name, context)
 
 
@@ -115,6 +108,7 @@ class CreateLectureView(View):
 
     def get(self, request, slug):
         meetup = Meetup.objects.get(slug=slug)
+
         if request.user != meetup.owner:
             return HttpResponseNotFound()
 
@@ -123,11 +117,11 @@ class CreateLectureView(View):
             'meetup_name': meetup.name,
             'form': form
         }
-
         return render(request, self.template_name, context)
 
     def post(self, request, slug):
         meetup = Meetup.objects.get(slug=slug)
+
         if request.user != meetup.owner:
             return HttpResponseNotFound()
 
@@ -168,7 +162,6 @@ class UpdateLectureView(View):
             'meetup_name': meetup.name,
             'form': form
         }
-
         return render(request, self.template_name, context)
 
     def post(self, request, slug, pk):
@@ -179,7 +172,6 @@ class UpdateLectureView(View):
             return HttpResponseNotFound()
 
         form = LectureForm(data=request.POST, instance=lecture)
-
         if form.is_valid():
             lecture.name = form.cleaned_data['name']
             lecture.description = form.cleaned_data['description']
@@ -188,12 +180,10 @@ class UpdateLectureView(View):
             # TODO: update lectors
 
             lecture.save()
-
             return redirect('meetup_detail', slug)
 
         context = {
             'meetup_name': meetup.name,
             'form': form
         }
-
         return render(request, self.template_name, context)

@@ -6,12 +6,17 @@ import json
 from slugify import slugify
 import re
 import base64
+import sys
 
 
 class Command(BaseCommand):
     help = 'Default map setup'
 
     def handle(self, *args, **options):
+        if Map.objects.filter(title='default'):
+            sys.stdout.write('Map "default" already exists. You only need to run this command once.')
+            return
+
         cluster_icon = BASE_DIR / 'maps/static/maps/default_map_assets/default_cluster_icon.svg'
         with open(cluster_icon, 'rb') as icon:
             icon_cluster = ClusterIcon.objects.create(svg=ContentFile(icon.read(), 'default_cluster_icon.svg'),
@@ -68,3 +73,5 @@ class Command(BaseCommand):
                                  icon_slug='default',
                                  active=False
                                  )
+
+        sys.stdout.write('Successfully created default map')
