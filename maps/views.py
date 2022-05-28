@@ -42,7 +42,7 @@ class AjaxUploadPlacemarks(View):
 
         response_data = '[' + ','.join(geoobjects) + ']'
 
-        return HttpResponse(response_data, content_type="application/json")
+        return HttpResponse(response_data, content_type='application/json')
 
     def dispatch(self, request, *args, **kwargs):
         if not request.is_ajax():

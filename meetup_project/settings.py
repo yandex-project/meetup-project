@@ -14,7 +14,7 @@ DEBUG = os.getenv('DEBUG') == 'True'
 ALLOWED_HOSTS = ['127.0.0.1']
 
 INTERNAL_IPS = [
-    "127.0.0.1",
+    '127.0.0.1',
 ]
 
 INSTALLED_APPS = [
@@ -107,8 +107,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
-    BASE_DIR / "maps/static",
+    BASE_DIR / 'static',
+    BASE_DIR / 'maps/static',
 ]
 
 MEDIA_URL = '/media/'
