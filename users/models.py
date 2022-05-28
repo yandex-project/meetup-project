@@ -7,10 +7,6 @@ from users.managers import UserManager
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    class Meta:
-        verbose_name = 'Пользователь'
-        verbose_name_plural = 'Пользователи'
-
     email = models.EmailField(verbose_name='Email', unique=True)
     first_name = models.CharField(verbose_name='Имя', max_length=64, blank=True)
     last_name = models.CharField(verbose_name='Фамилия', max_length=64, blank=True)
@@ -26,6 +22,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
 
     objects = UserManager()
+
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'

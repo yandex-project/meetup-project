@@ -6,14 +6,19 @@ import json
 from slugify import slugify
 import re
 import base64
+import sys
 
 
 class Command(BaseCommand):
     help = 'Default map setup'
 
     def handle(self, *args, **options):
+        if Map.objects.filter(title='default'):
+            sys.stdout.write('Map "default" already exists. You only need to run this command once.')
+            return
+
         cluster_icon = BASE_DIR / 'maps/static/maps/default_map_assets/default_cluster_icon.svg'
-        with open(cluster_icon, "rb") as icon:
+        with open(cluster_icon, 'rb') as icon:
             icon_cluster = ClusterIcon.objects.create(svg=ContentFile(icon.read(), 'default_cluster_icon.svg'),
                                                       title='default',
                                                       )
@@ -21,7 +26,7 @@ class Command(BaseCommand):
         icon_collection = IconCollection.objects.create(title='default')
 
         marker_icon = BASE_DIR / 'maps/static/maps/default_map_assets/default_marker_icon.svg'
-        with open(marker_icon, "rb") as icon:
+        with open(marker_icon, 'rb') as icon:
             MarkerIcon.objects.create(svg=ContentFile(icon.read(), 'default_marker_icon.svg'),
                                       title='default',
                                       icon_collection=icon_collection)
@@ -35,7 +40,7 @@ class Command(BaseCommand):
                 image_type = 'png' if re.search(
                     r'png', source['screenshot']) is not None else 'jpg'
                 screenshot = re.sub(
-                    r'^data:image/(png|jpeg);base64,', "", source['screenshot'])
+                    r'^data:image/(png|jpeg);base64,', '', source['screenshot'])
                 TileSource.objects.create(
                     title=source['title'],
                     maxzoom=source['maxzoom'],
@@ -68,3 +73,5 @@ class Command(BaseCommand):
                                  icon_slug='default',
                                  active=False
                                  )
+
+        sys.stdout.write('Successfully created default map')

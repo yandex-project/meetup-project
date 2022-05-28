@@ -2,7 +2,6 @@ from django.contrib.auth.decorators import login_required
 from django.urls import path
 from meetups import views
 
-
 urlpatterns = [
     path('add_meetup/', login_required(views.CreateMeetupView.as_view()), name='create_meetup'),
     path('<slug>/', views.MeetupDetailView.as_view(), name='meetup_detail'),

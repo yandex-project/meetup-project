@@ -21,7 +21,6 @@ class GlobalMapView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['map_slug'] = get_global_map().slug
         context['filters'] = kwargs['ctx'] or {}
-
         return context
 
 
@@ -34,15 +33,12 @@ class AjaxUploadPlacemarks(View):
         ctx = loads(ctx)
         offset = int(request.GET.get('offset'))
         limit = offset + 1000
-
         geoobjects = Meetup.objects.get_meetups_from_context(ctx)
         geoobjects = geoobjects.values_list('marker__placemark__json_code',
                                             flat=True)[offset:limit]
         geoobjects = list(filter(lambda x: x, geoobjects))
-
-        response_data = '[' + ','.join(geoobjects) + ']'
-
-        return HttpResponse(response_data, content_type="application/json")
+        response_data = f'[{",".join(geoobjects)}]'
+        return HttpResponse(response_data, content_type='application/json')
 
     def dispatch(self, request, *args, **kwargs):
         if not request.is_ajax():
